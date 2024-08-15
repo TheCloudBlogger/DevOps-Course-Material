@@ -59,10 +59,10 @@ Here are some essential Git commands along with descriptions of what they do:
 17. git diff
     - Shows changes between the working directory and the staging area.
 
-18. git diff --staged
+18. git diff --staged or  git diff --staged head
     - Shows changes between the staging area and the last commit(Local repository).
 
-19. git diff --staged head
+19. git diff  head
     - Shows changes between the working directory and the last commit(Local repository).
 
 
