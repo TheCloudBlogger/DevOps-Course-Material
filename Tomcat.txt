@@ -1,35 +1,45 @@
 1. Install Java
 
 sudo apt update
+sudo apt upgrade -y
 
 sudo apt install default–jdk
+or 
+sudo apt install openjdk-11-jdk -y
 
-2. Create Tomcat User
+java -version
 
-sudo groupadd tomcat
+2. Create a file for Java environment Variable
+
+sudo nano /etc/environment.d/java.conf
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+PATH="$JAVA_HOME/bin:$PATH"
+source /etc/environment.d/java.conf
+
+echo $$JAVA_HOME
+
+
+3. Create Tomcat User
+
 sudo useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
 
-sudo chown -R tomcat:tomcat /opt/tomcat/
+4. Install Tomcat on Ubuntu
+cd /tmp
+wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz 
+
+sudo mkdir -p /opt/tomcat
+
+cd /opt/tomcat
+sudo tar xzvf /tmp/apache-tomcat-9.0.*tar.gz -C /opt/tomcat --strip-components=1
+
+
+sudo chown -R tomcat: /opt/tomcat/
 sudo chmod -R 755 /opt/tomcat
 
 
-
-cd /tmp
-
-3. Install Tomcat on Ubuntu
-
-wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.63/bin/apache-tomcat-9.0.63.tar.gz
-
-sudo mkdir /opt/tomcat
-
-cd /opt/tomcat
-
-sudo tar xzvf /tmp/apache-tomcat-9.0.*tar.gz -C /opt/tomcat --strip-components=1
-
-4. Create a Systemd file
+5. Create a Systemd file
 
 sudo nano /etc/systemd/system/tomcat.service
-
 
 [Unit]
 Description=Apache Tomcat Web Application Container
@@ -37,43 +47,106 @@ After=network.target
 
 [Service]
 Type=forking
-
-Environment=JAVA_HOME=/usr/lib/jvm/default-java
+User=tomcat
+Group=tomcat
+Environment=JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
 Environment=CATALINA_HOME=/opt/tomcat
 Environment=CATALINA_BASE=/opt/tomcat
-Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
-
 ExecStart=/opt/tomcat/bin/startup.sh
 ExecStop=/opt/tomcat/bin/shutdown.sh
-
-User=tomcat
-Group=tomcat
-UMask=0007
-RestartSec=10
-Restart=always
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 
-
+6. Reload the systemd daemon to apply the changes:
 sudo systemctl daemon-reload
 
-cd /opt/tomcat/bin
+sudo systemctl start tomcat
+sudo systemctl enable tomcat
 
-sudo ./startup.sh run
+7. Check the status of Tomcat server
+
+sudo systemctl status tomcat
 
 
 sudo ufw allow 8080
 
-5. Setup Tomcat users and Webapp whitelisting
+8. Setup Tomcat users and Webapp whitelisting
 
 sudo nano /opt/tomcat/conf/tomcat-users.xml
 
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tomcat-users>
+ <role rolename="manager-gui"/>
+ <role rolename="admin-gui"/>
+ <role rolename="manager-script"/>
+    <user username="admin" password="admin@123" roles="manager-gui,admin-gui"/>
+    <user username="deploy" password="deploy@123" roles="manager-script"/>
+</tomcat-users>
+
+
 sudo nano /opt/tomcat/webapps/manager/META-INF/context.xml
+<!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+-->
+
 sudo nano /opt/tomcat/webapps/host-manager/META-INF/context.xml
 
-6 Access Online 
+<!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+-->
+
+10 Restrat tomcat
+
+sudo systemctl restart tomcat
+
+
+
+11. Access Online 
 
 http://server_domain_or_IP:8080/host-manager/html/
+
+12 Deploy WAR File from Maven to Tomcat Server
+
+Edit POM.xml file
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <url>http://tomcat-server-ip:8080/manager/text</url>
+                <server>TomcatServer</server>
+                <path>/your-app-context</path>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
+Create settings.xml file under .m2 file
+sudo nano /root/.m2/settings.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>TomcatServer</id>
+            <username>admin</username>
+            <password>password</password>
+        </server>
+    </servers>
+</settings>
+
+13. Deploy the WAR file to Tomcat server
+
+ mvn clean install tomcat7:deploy
+
