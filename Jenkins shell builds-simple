@@ -1,0 +1,21 @@
+**Jeninks Print "hello world "
+echo "hello world"
+
+**Jenkins Print "Today date and time is :"
+echo "Today date and time is : $(date)"
+
+**Jenkins create a sample script "
+cd ~
+nano test_job.sh
+#!/bin/bash
+first_name=$1
+second_name=$2
+echo "my name is $first_name $second_name"
+chmod 755 test_job.sh
+
+Copy the file to /tmp becuase of permission issues
+cp test_job.sh /tmp
+
+Script path : /tmp/test_job.sh
+
+** Parametrized Build **
