@@ -9,12 +9,13 @@ sudo apt upgrade -y
 sudo apt install openjdk-11-jdk -y
 
 #### Set up an environment variable for Java
-'''
+```
 sudo nano /etc/environment.d/java.conf
 JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 PATH="$JAVA_HOME/cli:$PATH"
 source /etc/environment.d/java.conf
-'''
+
+```
 
 #### install Maven
 sudo apt install maven 
