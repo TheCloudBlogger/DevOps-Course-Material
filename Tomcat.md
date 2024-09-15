@@ -1,24 +1,24 @@
-1. Install Java
-
+## Install Java
+```
 sudo apt update
 sudo apt upgrade -y
-
+```
 sudo apt install default–jdk
 or 
 sudo apt install openjdk-11-jdk -y
 
 java -version
 
-2. Create a file for Java environment Variable
+#### Create a file for Java environment Variable
 
+'''
 sudo nano /etc/environment.d/java.conf
 JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 PATH="$JAVA_HOME/bin:$PATH"
 source /etc/environment.d/java.conf
-
 echo $$JAVA_HOME
 
-
+'''
 3. Create Tomcat User
 
 sudo useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
