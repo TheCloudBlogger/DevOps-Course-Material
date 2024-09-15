@@ -1,3 +1,5 @@
+## Setting up Maven and running a Webapp
+
 #### Update and Upgrade apt
 
 sudo apt update
@@ -44,7 +46,6 @@ A folder with name Maven-webapp-project will be created with Src and POM.XML fil
 
 ## Build the WAR Package
 mvn clean package
-
 Maven-webapp-project.war file will be created under the target
 
 #### Maven Lifecycles
