@@ -3,20 +3,20 @@
 sudo apt update
 sudo apt upgrade -y
 
-**Install Java **
+#### Install Java
 sudo apt install openjdk-11-jdk -y
 
-**Set up an environment variable for Java **
+#### Set up an environment variable for Java
 
 sudo nano /etc/environment.d/java.conf
 JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 PATH="$JAVA_HOME/cli:$PATH"
 source /etc/environment.d/java.conf
 
-**install Maven **
+#### install Maven
 sudo apt install maven 
 
-**Set up an environment variable for Maven **
+#### Set up an environment variable for Maven
 
 sudo nano /etc/environment.d/maven.conf
 M2_HOME=/usr/share/maven
@@ -32,22 +32,22 @@ source /etc/profile.d/maven.sh
 
 mvn --version
 
-**Create Project directory **
+#### Create Project directory
 mkdir -p /opt/Maven-Projects
 cd /opt/Maven-Projects
 
-**Create sample maven  Webapp **
+#### Create sample maven  Webapp
 Link - https://maven.apache.org/archetypes/maven-archetype-webapp/
 mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.5
 
 A folder with name Maven-webapp-project will be created with Src and POM.XML file
 
-**Build the WAR Package **
+## Build the WAR Package
 mvn clean package
 
 Maven-webapp-project.war file will be created under the target
 
-Maven Lifecycles
+#### Maven Lifecycles
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 
 validate - validate the project is correct and all necessary information is available
