@@ -32,20 +32,21 @@ PATH="$JAVA_HOME/bin:$PATH"
 source /etc/environment.d/java.conf
 
 ```
-#### setting up ssh
+- Setting up ssh
 
 ```
   apt install ssh -y
   /etc/init.d/ssh start
 ```
-#### Create a user on Agent
+- Create a user on Agent
+  
 ```
   useradd -m -d /home/jenkins jenkins
   sudo chown -R jenkins /home/jenkins/
   sudo chmod -R 755 /home/jenkins/
 
  ```
-### Create ssh key for added jenkins user
+- Create ssh key for added jenkins user
 
 ``` su jenkins
     ssh-keygen
