@@ -8,7 +8,9 @@
 ##
 ![image](https://github.com/user-attachments/assets/86f6272a-110a-4712-83d1-48557244bead)
 ##
-- Refer Configure Private Key on Master section below to configure credetials
+```
+ **Note:** Refer Configure Private Key on Master section below to configure credentials
+```
 ![image](https://github.com/user-attachments/assets/21c02e7e-95a2-4c11-b36d-64da18eed2ba)
 ##
 ![image](https://github.com/user-attachments/assets/0d21fc86-fda1-4ae9-b853-d20ff81a38d0)
