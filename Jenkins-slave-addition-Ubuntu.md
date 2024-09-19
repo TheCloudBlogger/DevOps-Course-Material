@@ -3,30 +3,34 @@
 - First go to Jenkins Master Node GUI
 - Go to Nodes
 - Click on New Node to add a new node
-  ####################################
+##
   ![image](https://github.com/user-attachments/assets/044212b1-0663-454b-82b6-d00979bfae7f)
- ######################################
+##
 ![image](https://github.com/user-attachments/assets/86f6272a-110a-4712-83d1-48557244bead)
-#######################################
+##
 - Refer Configure Private Key on Master section below to configure credetials
 ![image](https://github.com/user-attachments/assets/21c02e7e-95a2-4c11-b36d-64da18eed2ba)
-#######################################
+##
 ![image](https://github.com/user-attachments/assets/0d21fc86-fda1-4ae9-b853-d20ff81a38d0)
 
 ## Configuration on Agent
 
 - Create an Ubuntu Linux VM
 - Install java
+  
   ``` apt update
       apt upgrade -y
       apt install openjdk-11-jdk -y
-```
+  ```
 - set up Java environment variable
+
+  
 ```
 nano /etc/environment.d/java.conf
 JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 PATH="$JAVA_HOME/bin:$PATH"
 source /etc/environment.d/java.conf
+
 ```
 #### setting up ssh
 
