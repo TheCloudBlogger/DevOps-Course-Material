@@ -1,0 +1,27 @@
+job('parameterized-freestyle-job') {
+    description('Freestyle project with parameters')
+
+    parameters {
+        stringParam('BRANCH', 'master', 'Branch to build')
+        booleanParam('RUN_TESTS', true, 'Run tests after build')
+    }
+
+    scm {
+        git('https://github.com/example/repo.git', '${BRANCH}')
+    }
+
+    steps {
+        shell('echo "Building branch ${BRANCH}"')
+        shell('mvn clean install')
+        
+        conditionalSteps {
+            condition {
+                booleanCondition('${RUN_TESTS}')
+            }
+            runner('Fail')
+            steps {
+                shell('mvn test')
+            }
+        }
+    }
+}
