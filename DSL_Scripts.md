@@ -1,6 +1,6 @@
 ## DSL Example Scripts
 
-#### 1. Project with description
+### 1. Project with description
 
    ```
    job('Description-Project') {
@@ -8,7 +8,7 @@
 }
 
   ```
-#### 2. Scm Project
+### 2. Scm Project
 
 ```
 
@@ -21,7 +21,7 @@ job('Git-Project') {
 
 ```
 
-#### 3. Building a Steps Job
+### 3. Building a Steps Job
 
 ```
 job('example-freestyle-job') {
