@@ -1,5 +1,5 @@
 job('parameterized-freestyle-job') {
-    description('Freestyle project with parameters')
+    description('Freestyle project with parameters example')
 
     parameters {
         stringParam('BRANCH', 'master', 'Branch to build')
