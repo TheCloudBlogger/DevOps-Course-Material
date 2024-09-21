@@ -6,6 +6,8 @@
 
 This pipeline doesn't execute any real build, test, or deploy actions, but it helps you validate the pipeline structure and flow
 
+```
+
 pipeline {
     agent any
 
@@ -64,7 +66,7 @@ pipeline {
         }
     }
 }
-...
+```
 
 ---
 
