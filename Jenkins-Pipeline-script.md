@@ -1,4 +1,4 @@
-Here are examples of Jenkins Declarative Pipelines demonstrating each of the requested features: **Shell Scripts**, **Maven Jobs**, **Post Build Actions**, **GitHub SCM**, and **Pipeline with Parameters**. After that, I'll provide a final example that combines all these features into a single pipeline.
+## Pipeline Scripts Example
 
 ---
 
