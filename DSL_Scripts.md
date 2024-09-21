@@ -1,14 +1,16 @@
 ## DSL Example Scripts
 
-1. Project with description
+#### 1. Project with description
 
    ```
    job('Description-Project') {
     description('My first job')
 }
 
+  ```
+#### 2. Scm Project
+
 ```
-2. Scm Project
 
 job('Git-Project') {
      description('My second job')
@@ -17,8 +19,11 @@ job('Git-Project') {
     }
 }
 
-3. Building a Steps Job
+```
 
+#### 3. Building a Steps Job
+
+```
 job('example-freestyle-job') {
     description('This is a sample Freestyle project created using DSL Plugin.')
 
@@ -40,8 +45,11 @@ job('example-freestyle-job') {
     }
 }
 
-4. Building a Parameterized job
+```
 
+### 4. Building a Parameterized job
+
+```
 job('parameterized-freestyle-job') {
     description('Freestyle project with parameters')
 
@@ -73,3 +81,5 @@ job('parameterized-freestyle-job') {
         }
     }
 }
+
+```
