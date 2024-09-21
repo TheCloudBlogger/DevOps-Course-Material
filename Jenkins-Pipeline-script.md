@@ -293,5 +293,3 @@ pipeline {
 - **Post-Build Actions**: Notifications or cleanups are handled in the `post` section. Success or failure messages can be sent via tools like Slack.
 - **GitHub SCM**: The `Checkout` stage pulls the code from GitHub using an SSH URL and `credentialsId`.
 - **Parameters**: The pipeline accepts two parameters: `BRANCH_NAME` (to specify the branch) and `RUN_TESTS` (to conditionally run tests).
-
-This example gives you a comprehensive Jenkins pipeline that leverages the power of Maven, shell scripts, SCM integration, and post-build actions. You can further extend or modify it to fit your specific requirements.
