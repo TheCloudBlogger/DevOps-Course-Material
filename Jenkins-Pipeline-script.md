@@ -2,7 +2,9 @@
 
 ---
 
-### 1. Pipeline with all the stages( using echo statements only )
+---
+
+### 1. **Pipeline with all the stages( using echo statements only )**
 
 This pipeline doesn't execute any real build, test, or deploy actions, but it helps you validate the pipeline structure and flow
 
@@ -65,8 +67,12 @@ pipeline {
     }
 }
 
+---
 
-### 1. **Pipeline with Shell Scripts**
+---
+
+
+### 2. **Pipeline with Shell Scripts**
 
 This pipeline uses shell scripts to run build and test commands.
 
@@ -107,7 +113,7 @@ pipeline {
 
 ---
 
-### 2. **Pipeline with Maven Jobs**
+### 3. **Pipeline with Maven Jobs**
 
 This pipeline uses Maven for the build and test phases.
 
@@ -154,7 +160,7 @@ pipeline {
 
 ---
 
-### 3. **Pipeline with Post-Build Actions**
+### 4. **Pipeline with Post-Build Actions**
 
 This pipeline includes post-build actions, such as sending notifications on success or failure.
 
@@ -201,7 +207,7 @@ pipeline {
 
 ---
 
-### 4. **Pipeline with GitHub SCM**
+### 5. **Pipeline with GitHub SCM**
 
 This pipeline clones a repository from GitHub using SSH authentication.
 
@@ -235,7 +241,7 @@ pipeline {
 
 ---
 
-### 5. **Pipeline with Parameters**
+### 6. **Pipeline with Parameters**
 
 This pipeline accepts parameters to customize the build (e.g., choosing the branch to build or deciding whether to run tests).
 
@@ -277,7 +283,7 @@ pipeline {
 
 ---
 
-### 6. **Pipeline Combining All Features**
+### 7. **Pipeline Combining All Features**
 
 This final pipeline example combines shell scripts, Maven jobs, post-build actions, GitHub SCM integration, and parameters.
 
