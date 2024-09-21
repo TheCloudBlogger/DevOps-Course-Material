@@ -2,6 +2,70 @@
 
 ---
 
+### 1. Pipeline with all the stages( using echo statements only )
+
+This pipeline doesn't execute any real build, test, or deploy actions, but it helps you validate the pipeline structure and flow
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests after build?')
+        choice(name: 'DEPLOY_ENV', choices: ['dev', 'staging', 'production'], description: 'Deployment environment')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Checking out branch: ${params.BRANCH_NAME} from GitHub..."
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+            }
+        }
+
+        stage('Run Shell Script') {
+            steps {
+                echo 'Running custom shell script...'
+            }
+        }
+
+        stage('Test') {
+            when {
+                expression { return params.RUN_TESTS }
+            }
+            steps {
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying the application to ${params.DEPLOY_ENV} environment..."
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+
+        always {
+            echo 'Cleaning up the workspace...'
+        }
+    }
+}
+
+
 ### 1. **Pipeline with Shell Scripts**
 
 This pipeline uses shell scripts to run build and test commands.
@@ -45,7 +109,7 @@ pipeline {
 
 ### 2. **Pipeline with Maven Jobs**
 
-This pipeline uses Maven for build and test phases.
+This pipeline uses Maven for the build and test phases.
 
 ```groovy
 pipeline {
