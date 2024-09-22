@@ -1,4 +1,7 @@
-## Install Java
+## Tomcat Server deploy
+---
+
+### 1. Install Java
 ```
 sudo apt update
 sudo apt upgrade -y
@@ -9,21 +12,33 @@ sudo apt install openjdk-11-jdk -y
 
 java -version
 
-#### Create a file for Java environment Variable
+---
 
-'''
+### 2. Create a file for the Java environment Variable
+
+```
 sudo nano /etc/environment.d/java.conf
 JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 PATH="$JAVA_HOME/bin:$PATH"
 source /etc/environment.d/java.conf
 echo $$JAVA_HOME
 
-'''
-3. Create Tomcat User
+```
+---
 
+### 3. Create Tomcat User
+
+```
 sudo useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
 
-4. Install Tomcat on Ubuntu
+```
+
+---
+
+### 4. Install Tomcat on Ubuntu
+
+```
+
 cd /tmp
 wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz 
 
@@ -36,9 +51,13 @@ sudo tar xzvf /tmp/apache-tomcat-9.0.*tar.gz -C /opt/tomcat --strip-components=1
 sudo chown -R tomcat: /opt/tomcat/
 sudo chmod -R 755 /opt/tomcat
 
+```
 
-5. Create a Systemd file
+---
 
+### 5. Create a Systemd file
+
+```
 sudo nano /etc/systemd/system/tomcat.service
 
 [Unit]
@@ -60,21 +79,30 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 
-6. Reload the systemd daemon to apply the changes:
-sudo systemctl daemon-reload
+```
+---
 
+### 6. Reload the systemd daemon to apply the changes:
+
+```
+sudo systemctl daemon-reload
 sudo systemctl start tomcat
 sudo systemctl enable tomcat
 
-7. Check the status of Tomcat server
+```
+---
 
+### 7. Check the status of Tomcat server
+
+```
 sudo systemctl status tomcat
 
+```
+---
 
-sudo ufw allow 8080
+### 8. Setup Tomcat users and Webapp whitelisting
 
-8. Setup Tomcat users and Webapp whitelisting
-
+```
 sudo nano /opt/tomcat/conf/tomcat-users.xml
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -101,18 +129,28 @@ sudo nano /opt/tomcat/webapps/host-manager/META-INF/context.xml
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 -->
 
-10 Restrat tomcat
+```
+---
 
+### 9. Restart tomcat
+
+```
 sudo systemctl restart tomcat
 
+```
+---
 
+### 10. Access Online 
 
-11. Access Online 
-
+```
 http://server_domain_or_IP:8080/host-manager/html/
 
-12 Deploy WAR File from Maven to Tomcat Server
+```
+---
 
+### 11. Deploy WAR File from Maven to Tomcat Server
+
+```
 Edit POM.xml file
 
 <build>
@@ -130,7 +168,12 @@ Edit POM.xml file
     </plugins>
 </build>
 
-Create settings.xml file under .m2 file
+```
+---
+
+### 12. Create settings.xml file under .m2 file
+
+```
 sudo nano /root/.m2/settings.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
@@ -146,7 +189,15 @@ sudo nano /root/.m2/settings.xml
     </servers>
 </settings>
 
-13. Deploy the WAR file to Tomcat server
+```
+---
 
+### 13. Deploy the WAR file to the Tomcat server
+
+```
  mvn clean install tomcat7:deploy
 
+```
+----
+
+----
