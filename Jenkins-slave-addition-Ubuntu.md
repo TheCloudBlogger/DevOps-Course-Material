@@ -50,8 +50,10 @@ source /etc/environment.d/java.conf
  ```
 - Create ssh key for added jenkins user
 
-``` su jenkins
-    ssh-keygen
+```
+su jenkins
+ssh-keygen
+
 ```
 - you will notice 2 files created under .ssh folder as id_rsa and id_rsa.pub
 - id_rsa contains the private key while id_rsa.pub contains public key
