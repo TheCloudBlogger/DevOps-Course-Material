@@ -1,0 +1,54 @@
+pipeline {
+    agent { label 'Maven' }  // Specify that the pipeline should run on an agent with the label "Maven"
+
+    environment {
+        TOMCAT_URL = 'http://20.232.131.113:8080/manager/text' // Replace with your Tomcat URL
+        TOMCAT_USER = 'admin'  // Tomcat Manager username
+        TOMCAT_PASSWORD = 'admin@123'  // Tomcat Manager password
+    }
+
+    stages {
+        stage('Maven Clean') {
+            steps {
+                // Use the Maven tool for the clean goal
+                script {
+                    withMaven(maven: 'Maven') { // Specify Maven version if needed
+                        sh 'mvn clean'
+                    }
+                }
+            }
+        }
+        stage('Maven Package') {
+            steps {
+                // Use the Maven tool for the package goal
+                script {
+                    withMaven(maven: 'Maven') {
+                        sh 'mvn package'
+                    }
+                }
+            }
+        }
+        stage('Deploy to Container') {
+            steps {
+                // Deploy the WAR file to Tomcat using Deploy to Container plugin
+                deployToContainer {
+                    contextPath = '/Pipeline-webapp'  // Set the context path for deployment
+                    warFile = '**/target/*.war'  // Path to the WAR file (glob pattern)
+                    url = "${TOMCAT_URL}"  // URL to Tomcat manager
+                    username = "${TOMCAT_USER}"  // Tomcat manager username
+                    password = "${TOMCAT_PASSWORD}"  // Tomcat manager password
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            // Archive the WAR file after successful deployment
+            archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
