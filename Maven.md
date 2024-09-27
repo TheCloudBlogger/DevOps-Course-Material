@@ -22,6 +22,7 @@ sudo apt install maven
 
 #### Set up an environment variable for Maven
 
+```
 sudo nano /etc/environment.d/maven.conf
 M2_HOME=/usr/share/maven
 M2=/usr/share/maven/bin
@@ -36,6 +37,7 @@ source /etc/profile.d/maven.sh
 
 mvn --version
 
+```
 #### Create Project directory
 mkdir -p /opt/Maven-Projects
 cd /opt/Maven-Projects
