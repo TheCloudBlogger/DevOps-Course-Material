@@ -7,11 +7,6 @@ pipeline {
         TOMCAT_PASSWORD = 'admin@123'  // Tomcat Manager password
     }
 
-options {
-        // Poll SCM every 2 minutes
-        pollSCM('H/2 * * * *')  // Cron syntax for every 2 minutes
-    }
-
     stages {
         stage('Checkout Source Code') {
             steps {
@@ -56,6 +51,7 @@ options {
                 ])
     }
     }
+ }
 
 post {
         success {
@@ -66,5 +62,4 @@ post {
             echo 'Build failed!'
         }
     }
-}
 }
