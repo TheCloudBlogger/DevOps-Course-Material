@@ -9,7 +9,7 @@ pipeline {
 
 options {
         // Poll SCM every 2 minutes
-        pollSCM('* * /2 * *')  // Cron syntax for every 2 minutes
+        pollSCM('H/2 * * * *')  // Cron syntax for every 2 minutes
     }
 
     stages {
@@ -47,15 +47,14 @@ options {
         stage('Deploy to Container') {
             steps {
                 // Deploy the WAR file to Tomcat using Deploy to Container plugin
-                deployToContainer {
-                    contextPath = '/Pipeline-webapp'  // Set the context path for deployment
-                    warFile = '**/target/*.war'  // Path to the WAR file (glob pattern)
-                    url = "${TOMCAT_URL}"  // URL to Tomcat manager
-                    username = "${TOMCAT_USER}"  // Tomcat manager username
-                    password = "${TOMCAT_PASSWORD}"  // Tomcat manager password
-                }
-            }
-        }
+                deployToContainer([
+                    contextPath: '/Pipeline-webapp',  // Set the context path for deployment
+                    warFile: '**/target/*.war',        // Path to the WAR file (glob pattern)
+                    url: "${TOMCAT_URL}",              // URL to Tomcat manager
+                    username: "${TOMCAT_USER}",        // Tomcat manager username
+                    password: "${TOMCAT_PASSWORD}"     // Tomcat manager password
+                ])
+    }
     }
 
     post {
