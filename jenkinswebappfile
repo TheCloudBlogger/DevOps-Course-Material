@@ -57,7 +57,7 @@ options {
     }
     }
 
-    post {
+post {
         success {
             // Archive the WAR file after successful deployment
             archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
