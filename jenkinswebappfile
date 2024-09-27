@@ -7,6 +7,23 @@ pipeline {
         TOMCAT_PASSWORD = 'admin@123'  // Tomcat Manager password
     }
 
+options {
+        // Poll SCM every 2 minutes
+        pollSCM('* * /2 * *')  // Cron syntax for every 2 minutes
+    }
+
+    stages {
+        stage('Checkout Source Code') {
+            steps {
+                // Checkout the source code from GitHub
+                checkout scm: [
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/master']], // Change this to the correct branch if needed
+                    userRemoteConfigs: [[url: 'https://github.com/TheCloudBlogger/Maven-webapp.git']]
+                ]
+            }
+        }
+
     stages {
         stage('Maven Clean') {
             steps {
