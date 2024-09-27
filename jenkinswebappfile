@@ -24,7 +24,6 @@ options {
             }
         }
 
-    stages {
         stage('Maven Clean') {
             steps {
                 // Use the Maven tool for the clean goal
