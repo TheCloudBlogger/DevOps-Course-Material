@@ -1,6 +1,6 @@
 ## VM-Health Script
 
-
+```
 #!/bin/bash
 
 # Azure Storage variables
@@ -27,4 +27,6 @@ for VM in "${VM_LIST[@]}"; do
 
     # Upload the file to Azure Blob Storage
     az storage blob upload --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY --container-name $AZURE_STORAGE_CONTAINER --file /tmp/$VM-health.txt --name "$VM-health-$(date +'%Y-%m-%d_%H-%M').txt"
+
+```
 done
